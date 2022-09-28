@@ -1,0 +1,76 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("Leeuwarden", "Ocean")
+    -- MAIN
+    local Main = Window:NewTab("Main")
+    local MainSection = Main:NewSection("Main")
+
+
+    MainSection:NewButton("Lag de server", "Zorgt voor veel lag in de server", function()
+        while true do
+            for i=1,10 do
+            game.ReplicatedStorage.ACS_Engine.wcihnidvdifnvijsdnjcsa.ServerBullet:FireServer(Vector3.new(0/0/0),Vector3.new(0/0/0))
+            end
+            task.wait()  
+            end
+    end)
+
+
+    MainSection:NewButton("Kill all", "Vermoord iedereen", function()
+        if game.ReplicatedStorage:FindFirstChild("ACS_Engine") then
+            for _,player in pairs(game.Players:GetPlayers()) do
+                if player ~= game.Players.LocalPlayer then
+                    game.ReplicatedStorage["ACS_Engine"].wcihnidvdifnvijsdnjcsa.Damage:FireServer(player.Character.Humanoid, 100, 100, 0)
+                end
+            end
+         else
+            print("Game doesn't have ACS!")
+         end
+    end)
+
+
+    --LOCAL PLAYER
+    local Player = Window:NewTab("Player")
+    local PlayerSection = Player:NewSection("Player")
+
+    PlayerSection:NewSlider("Walkspeed", "SPEED!!", 500, 16, function(s)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+    end)
+
+    PlayerSection:NewSlider("Jumppower", "JUMP HIGH!!", 350, 50, function(s)
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = s
+    end)
+
+    PlayerSection:NewButton("Reset WS/JP", "Resets to all defaults", function()
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+    end)
+
+
+    --Other
+    local Other = Window:NewTab("Other")
+    local OtherSection = Other:NewSection("Other")
+
+    OtherSection:NewButton("FE admin", "Geeft FE admin commands", function()
+        loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'),true))()
+    end)
+
+    OtherSection:NewButton("Anti kick", "Gebruik dit voor dat je walkspeed aanpast", function()
+        local Namecall; Namecall = hookmetamethod(game, "__namecall", function(self, ...)
+            if getnamecallmethod() == "Kick" and self == Player then
+                print("Idiot tried to kick you from the client LOL")
+                return Event:Wait() -- Here's an infinite yield so they can't continue execution (i.e: crash your client)
+            end
+            return Namecall(self, ...)
+        end)
+        
+        hookfunction(Player.Kick, function(self, ...) -- Just in case it's indexed, we can force __namecall to be fired.
+            return self:Kick(...)
+        end)
+
+        Fly(true)
+    end)
+    --Info
+    local Info = Window:NewTab("Info")
+    local InfoSection = Info:NewSection("Info")
+   
+    InfoSection:NewLabel("Gemaakt bij Thatoneperson#1111")
